@@ -59,10 +59,17 @@ app.delete('/user/:id', async (req, res) => {
 //get users
 app.get('/users', async (req, res) => {
 
-    const users = await prisma.user.findMany()
+    try {
+        const users = await prisma.user.findMany()
 
-    res.status(200).json(users)
+        res.status(200).json(users)
+    } catch (e) {
+
+        res.status(400).json({ message: 'Users cant be found' })
+    }
 })
+
+
 
 
 app.listen(PORT)
